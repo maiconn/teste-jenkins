@@ -21,10 +21,17 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/deploy.sh'
-            }
+    }
+    stage('Docker') {
+        agent any 
+        steps('Build') {
+            sh 'docker build -t jenkins-teste .'
+        }
+        steps('Stop') {
+            sh 'docker container stop jenkins-teste'
+        }
+        steps('Run') {
+            sh 'docker run --name jenkins-teste -d -p 8082:8082 jenkins-teste'
         }
     }
 }
