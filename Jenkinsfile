@@ -21,16 +21,13 @@ pipeline {
                 }
             }
         }
-    }
-    stage('Docker') {
-        agent any 
-        steps('Build') {
+        steps('Docker Build') {
             sh 'docker build -t jenkins-teste .'
         }
-        steps('Stop') {
+        steps('Docker Stop') {
             sh 'docker container stop jenkins-teste'
         }
-        steps('Run') {
+        steps('Docker Run') {
             sh 'docker run --name jenkins-teste -d -p 8082:8082 jenkins-teste'
         }
     }
