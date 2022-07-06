@@ -21,16 +21,12 @@ pipeline {
                 }
             }
         }
-        stage('Deply') { 
-            step('Docker Build') {
+        stage('Deploy') { 
+            steps('Docker') {
                 sh 'docker build -t jenkins-teste .'
-            }
-            step('Docker Stop') {
                 sh 'docker container stop jenkins-teste'
-            }
-            step('Docker Run') {
                 sh 'docker run --name jenkins-teste -d -p 8082:8082 jenkins-teste'
-            }   
+            }
         }
     }
 }
